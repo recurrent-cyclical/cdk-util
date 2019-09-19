@@ -12,8 +12,12 @@
   "engines": {
     "node": ">= 8.10.0"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:recurrent-cyclical/cdk-util.git"
+  },
   "author": "Daragh Martin",
-  "license": "APACHE 2",
+  "license": "APACHE-2.0",
   "devDependencies": {
     "prettier": "^1.18.2",
     "tslint": "^5.20.0",
