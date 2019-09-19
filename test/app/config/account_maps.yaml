@@ -1,0 +1,10 @@
+accountMaps:
+  "0000000":
+    Name: DevOps
+    Alias:
+      - ci
+      - Mgmt
+    BaseTldZone: devops.domain.sample #Base zone (usually in mgmt account) all other tlds will branch from this
+    Tld: ci.devops.domain.sample
+    NotifyEmail: notifications@domain.sample
+    SourceBucket: source.devops.domain.sample

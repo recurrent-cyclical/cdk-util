@@ -1,0 +1,13 @@
+project: devops
+applicationName: ci
+region: ap-southeast-2
+sourceRegion: ap-southeast-2
+sourceBucket: source.devops.domain.sample
+
+# old vars for deployment - will be removed
+application_name: ci
+source_region: ap-southeast-2
+source_bucket: source.devops.domain.sample
+:set_stack_as_name_tag: true
+notification_arns:
+  # - arn:aws:sns:ap-southeast-2:00000000:Cfn-Slack-Lambda-Notify

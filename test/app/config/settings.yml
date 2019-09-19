@@ -1,0 +1,6 @@
+source_bucket_name: source
+
+sourceDns:
+  - name: devops.domain.sample
+    comment: toplevel
+    exportName: dns-top-level
