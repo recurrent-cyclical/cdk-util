@@ -382,11 +382,11 @@ export class IsolatedVpc extends IsolatedVpcBase {
     }
   }
 
-  protected selectSubnetObjects(selection: SubnetSelection = {}): ISubnet[] {
-    console.log('do validation here');
-    // raise error on public || swap public with 'public'?
-    return super.selectSubnetObjects(selection);
-  }
+  // protected selectSubnetObjects(selection: SubnetSelection = {}): ISubnet[] {
+  //   console.log('do validation here');
+  //   // raise error on public || swap public with 'public'?
+  //   return super.selectSubnetObjects(selection);
+  // }
 
   // TODO: create Subnet exports and param store values for subnet[]
 }
