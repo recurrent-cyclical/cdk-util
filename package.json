@@ -13,11 +13,11 @@
     "node": ">= 8.10.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "git@github.com:recurrent-cyclical/cdk-util.git"
+    "type": "git",
+    "url": "git@github.com:recurrent-cyclical/cdk-util.git"
   },
   "author": "Daragh Martin",
-  "license": "APACHE-2.0",
+  "license": "Apache-2.0",
   "devDependencies": {
     "prettier": "^1.18.2",
     "tslint": "^5.20.0",
@@ -25,13 +25,13 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "@aws-cdk/aws-ec2": "^1.8.0",
-    "@aws-cdk/aws-ecs": "^1.8.0",
-    "@aws-cdk/aws-iam": "^1.8.0",
-    "@aws-cdk/aws-route53": "^1.8.0",
-    "@aws-cdk/aws-sns": "^1.8.0",
-    "@aws-cdk/aws-ssm": "^1.8.0",
-    "@aws-cdk/core": "^1.8.0",
+    "@aws-cdk/aws-ec2": "^1.13.1",
+    "@aws-cdk/aws-ecs": "^1.13.1",
+    "@aws-cdk/aws-iam": "^1.13.1",
+    "@aws-cdk/aws-route53": "^1.13.1",
+    "@aws-cdk/aws-sns": "^1.13.1",
+    "@aws-cdk/aws-ssm": "^1.13.1",
+    "@aws-cdk/core": "^1.13.1",
     "@types/js-yaml": "^3.12.1",
     "@types/node": "^12.7.5",
     "@types/pino": "^5.8.10",

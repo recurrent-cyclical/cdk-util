@@ -12,8 +12,8 @@ import {
   allRouteTableIds,
   defaultSubnetName,
   ImportSubnetGroup,
+  subnetGroupNameFromConstructId,
   subnetId,
-  subnetName,
 } from '@aws-cdk/aws-ec2/lib/util';
 import vpc = require('@aws-cdk/aws-ec2/lib/vpc');
 import {
@@ -112,6 +112,19 @@ function tap<T>(x: T, fn: (x: T) => void): T {
 }
 
 export abstract class VpcBase extends cdk.Resource implements IVpc {
+  selectSubnets(selection?: ec2.SubnetSelection | undefined): ec2.SelectedSubnets {
+    throw new Error("Method not implemented.");
+  }
+  addVpnConnection(id: string, options: ec2.VpnConnectionOptions): ec2.VpnConnection {
+    throw new Error("Method not implemented.");
+  }
+  addGatewayEndpoint(id: string, options: ec2.GatewayVpcEndpointOptions): ec2.GatewayVpcEndpoint {
+    throw new Error("Method not implemented.");
+  }
+  addInterfaceEndpoint(id: string, options: ec2.InterfaceVpcEndpointOptions): ec2.InterfaceVpcEndpoint {
+    throw new Error("Method not implemented.");
+  }
+  
   public vpcId: string;
   public publicSubnets: ISubnet[];
   public privateSubnets: ISubnet[];
@@ -123,87 +136,42 @@ export abstract class VpcBase extends cdk.Resource implements IVpc {
   public stack: cdk.Stack;
   public node: cdk.ConstructNode;
 
-  public selectSubnets(selection?: SubnetSelection | undefined): SelectedSubnets {
-    const subnets = this.selectSubnetObjects(selection);
-    const pubs = new Set(this.publicSubnets);
-    // TODO:
-    return {
-      availabilityZones: subnets.map(s => s.availabilityZone),
-      hasPublic: subnets.some(s => pubs.has(s)),
-      internetConnectivityEstablished: tap(new CompositeDependable(), d =>
-        subnets.forEach(s => d.add(s.internetConnectivityEstablished)),
-      ),
-      subnets,
-      subnetIds: subnets.map(s => s.subnetId),
-    };
-    throw new Error('Method not implemented.');
-  }
-
   /**
    * Adds a new VPN connection to this VPC
    */
   // @https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/aws-ec2/lib/vpc.ts
-  public addVpnConnection(id: string, options: VpnConnectionOptions): VpnConnection {
-    return new VpnConnection(this, id, {
-      vpc: this,
-      ...options,
-    });
-  }
+  // public addVpnConnection(id: string, options: VpnConnectionOptions): VpnConnection {
+  //   return new VpnConnection(this, id, {
+  //     vpc: this,
+  //     ...options,
+  //   });
+  // }
 
   /**
    * Adds a new gateway endpoint to this VPC
    */
   // @https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/aws-ec2/lib/vpc.ts
-  public addGatewayEndpoint(id: string, options: ec2.GatewayVpcEndpointOptions): ec2.GatewayVpcEndpoint {
-    return new GatewayVpcEndpoint(this, id, {
-      vpc: this,
-      ...options,
-    });
-  }
+  // public addGatewayEndpoint(id: string, options: ec2.GatewayVpcEndpointOptions): ec2.GatewayVpcEndpoint {
+  //   return new GatewayVpcEndpoint(this, id, {
+  //     vpc: this,
+  //     ...options,
+  //   });
+  // }
 
   /**
    * Adds a new interface endpoint to this VPC
    */
   // @https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/aws-ec2/lib/vpc.ts
-  public addInterfaceEndpoint(id: string, options: ec2.InterfaceVpcEndpointOptions): ec2.InterfaceVpcEndpoint {
-    return new InterfaceVpcEndpoint(this, id, {
-      vpc: this,
-      ...options,
-    });
-  }
+  // public addInterfaceEndpoint(id: string, options: ec2.InterfaceVpcEndpointOptions): ec2.InterfaceVpcEndpoint {
+  //   return new InterfaceVpcEndpoint(this, id, {
+  //     vpc: this,
+  //     ...options,
+  //   });
+  // }
 
   /**
    * Return the subnets appropriate for the placement strategy
    */
   // @https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/aws-ec2/lib/vpc.ts
-  protected selectSubnetObjects(selection: SubnetSelection = {}): ISubnet[] {
-    selection = reifySelectionDefaults(selection);
-    let subnets: ISubnet[] = [];
-
-    if (selection.subnetName !== undefined) {
-      // Select by name
-      const allSubnets = [...this.publicSubnets, ...this.privateSubnets, ...this.isolatedSubnets];
-      subnets = allSubnets.filter(s => subnetName(s) === selection.subnetName);
-    } else {
-      // Select by type
-      subnets = {
-        [SubnetType.ISOLATED]: this.isolatedSubnets,
-        [SubnetType.PRIVATE]: this.privateSubnets,
-        [SubnetType.PUBLIC]: this.publicSubnets,
-      }[selection.subnetType || SubnetType.PRIVATE];
-
-      if (selection.onePerAz && subnets.length > 0) {
-        // Restrict to at most one subnet group
-        subnets = subnets.filter(s => subnetName(s) === subnetName(subnets[0]));
-      }
-    }
-
-    if (subnets.length === 0) {
-      throw new Error(
-        `There are no ${describeSelection(selection)} in this VPC. Use a different VPC subnet selection.`,
-      );
-    }
-
-    return subnets;
-  }
+  
 }
