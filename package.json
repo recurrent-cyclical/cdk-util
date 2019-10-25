@@ -1,6 +1,6 @@
 {
   "name": "@recurrent-cyclical/cdk-util",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Utils for the CDK",
   "main": "lib/index.js",
   "scripts": {
